@@ -1,26 +1,25 @@
 import "./App.scss";
 import React from "react";
-import MyComponent from "./components/MyComponent";
+import Header from "./components/Header/Header";
+import { Link } from "react-router-dom";
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className={"app-container"}>
-        Hello world
-        <MyComponent></MyComponent>
+const App = () => {
+  return (
+    <div className={"app-container"}>
+      <Header />
+      <div>
+        test link
+        <div>
+          <button>
+            <Link to={"/admins"}>Go to admin page</Link>
+          </button>
+          <button>
+            <Link to={"/users"}>Go to user page</Link>
+          </button>
+        </div>
       </div>
-    );
-  }
-}
-
-// const App = () => {
-//   return (<div>
-//       Hello world
-//       <MyComponent/>
-//     </div>
-//
-//   );
-//
-// };
+    </div>
+  );
+};
 
 export default App;
