@@ -17,4 +17,8 @@ const postCreateNewUser = async (
   return await axios.post("participant", data);
 };
 
-export { postCreateNewUser };
+const getAllUsers = async () => {
+  return await axios.get("participant/all");
+};
+
+export { postCreateNewUser, getAllUsers };

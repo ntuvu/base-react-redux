@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { postCreateNewUser } from "../../../services/apiService";
+import _ from "lodash";
 
-function ModalCreateUser(props) {
-  const { show, setShow } = props;
+function ModalUpdateUser(props) {
+  const { show, setShow, dataUpdate } = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +15,18 @@ function ModalCreateUser(props) {
   const [role, setRole] = useState("USER");
   const [avatarImage, setAvatarImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      // update state
+      setEmail(dataUpdate.email);
+      setUsername(dataUpdate.username);
+      setRole(dataUpdate.role);
+      if (dataUpdate.image) {
+        setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+      }
+    }
+  }, [dataUpdate]);
 
   // close modal, reset form data
   const handleClose = () => {
@@ -41,7 +54,7 @@ function ModalCreateUser(props) {
       );
   };
 
-  const handleSubmitCreateUser = async () => {
+  const handleSubmitUpdateUser = async () => {
     // validate
     const isValidEmail = validateEmail(email);
     if (!isValidEmail) {
@@ -83,13 +96,14 @@ function ModalCreateUser(props) {
         backdrop={"static"}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add new user</Modal.Title>
+          <Modal.Title>Update user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
             <div className="col-md-6">
               <label className="form-label">Email</label>
               <input
+                disabled
                 type="email"
                 className="form-control"
                 value={email}
@@ -99,6 +113,7 @@ function ModalCreateUser(props) {
             <div className="col-md-6">
               <label className="form-label">Password</label>
               <input
+                disabled
                 type="password"
                 className="form-control"
                 value={password}
@@ -155,7 +170,7 @@ function ModalCreateUser(props) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
+          <Button variant="primary" onClick={() => handleSubmitUpdateUser()}>
             Save
           </Button>
         </Modal.Footer>
@@ -164,4 +179,4 @@ function ModalCreateUser(props) {
   );
 }
 
-export default ModalCreateUser;
+export default ModalUpdateUser;
