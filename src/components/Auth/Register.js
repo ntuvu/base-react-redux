@@ -1,13 +1,16 @@
-import "./Auth.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
+import "./Auth.scss";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { postRegister } from "../../services/apiService";
 
-const Login = (props) => {
+const Register = (props) => {
   // state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,7 +22,7 @@ const Login = (props) => {
       );
   };
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     // validate
     const isValidEmail = validateEmail(email);
     if (!isValidEmail) {
@@ -33,7 +36,7 @@ const Login = (props) => {
     }
 
     // call api
-    const data = await postLogin(email, password);
+    const data = await postRegister(email, username, password);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       navigate("/");
@@ -46,32 +49,58 @@ const Login = (props) => {
   return (
     <div className={"login-container"}>
       <div className={"header"}>
-        <span>Don't have an account yet?</span>
-        <button onClick={() => navigate("/register")}>Sign Up</button>
+        <span>Already have an account?</span>
+        <button onClick={() => navigate("/login")}>Login</button>
       </div>
       <div className={"title col-4 mx-auto"}>WEB TEST</div>
-      <div className={"welcome col-4 mx-auto"}>Hello, who's this?</div>
+      <div className={"welcome col-4 mx-auto"}>Start your journey?</div>
       <div className={"content-form col-4 mx-auto"}>
         <div className={"form-group"}>
           <label>Email</label>
           <input
+            required
             type={"email"}
             className={"form-control"}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-          <label>Password</label>
+          <label>Username</label>
           <input
-            type={"password"}
+            required
+            type={"text"}
             className={"form-control"}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
           />
+          <div className={"pass-group"}>
+            <label>Password</label>
+            <input
+              required
+              type={isShowPassword ? "text" : "password"}
+              className={"form-control"}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            {isShowPassword ? (
+              <span
+                className={"icons-eye"}
+                onClick={() => setIsShowPassword(false)}
+              >
+                <VscEye />
+              </span>
+            ) : (
+              <span
+                className={"icons-eye"}
+                onClick={() => setIsShowPassword(true)}
+              >
+                <VscEyeClosed />
+              </span>
+            )}
+          </div>
         </div>
-        <span className={"forgot-password"}>Forgot password</span>
         <div>
-          <button className={"btn-submit"} onClick={() => handleLogin()}>
-            Login
+          <button className={"btn-submit"} onClick={() => handleRegister()}>
+            Create free account
           </button>
         </div>
         <div className={"text-center"}>
@@ -90,4 +119,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Register;

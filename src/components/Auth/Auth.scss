@@ -4,7 +4,7 @@
     text-align: right;
     padding: 0 30px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 
     button {
@@ -46,6 +46,17 @@
 
     .back {
       cursor: pointer;
+    }
+
+    .pass-group {
+      position: relative;
+
+      .icons-eye {
+        position: absolute;
+        cursor: pointer;
+        right: 10px;
+        bottom: 10px;
+      }
     }
   }
 }

@@ -43,6 +43,14 @@ const postLogin = async (email, password) => {
   return await axios.post("login", { email: email, password: password });
 };
 
+const postRegister = async (email, username, password) => {
+  return await axios.post("register", {
+    email: email,
+    username: username,
+    password: password,
+  });
+};
+
 export {
   postCreateNewUser,
   getAllUsers,
@@ -50,4 +58,5 @@ export {
   deleteUser,
   getUsersWithPaginate,
   postLogin,
+  postRegister,
 };

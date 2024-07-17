@@ -5,8 +5,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
-  const handleLogin = () => {
+
+  const handleNavigateLogin = () => {
     navigate("login");
+  };
+
+  const handleNavigateRegister = () => {
+    navigate("register");
   };
 
   return (
@@ -30,10 +35,18 @@ const Header = () => {
           </Nav>
 
           <Nav>
-            <button className={"btn-login"} onClick={() => handleLogin()}>
+            <button
+              className={"btn-login"}
+              onClick={() => handleNavigateLogin()}
+            >
               Login
             </button>
-            <button className={"btn-signup"}>Sign Up</button>
+            <button
+              className={"btn-signup"}
+              onClick={() => handleNavigateRegister()}
+            >
+              Sign Up
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Container>
