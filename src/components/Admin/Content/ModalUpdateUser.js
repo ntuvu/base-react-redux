@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
-import { postCreateNewUser } from "../../../services/apiService";
+import { putUpdateUser } from "../../../services/apiService";
 import _ from "lodash";
 
 function ModalUpdateUser(props) {
@@ -37,6 +37,7 @@ function ModalUpdateUser(props) {
     setRole("USER");
     setAvatarImage("");
     setPreviewImage("");
+    props.resetDataUpdate();
   };
 
   const handleUploadImage = (event) => {
@@ -46,40 +47,18 @@ function ModalUpdateUser(props) {
     }
   };
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      );
-  };
-
   const handleSubmitUpdateUser = async () => {
-    // validate
-    const isValidEmail = validateEmail(email);
-    if (!isValidEmail) {
-      toast.error("Invalid Email");
-      return;
-    }
-
-    if (!password) {
-      toast.error("Invalid Password");
-      return;
-    }
-
     // call api
-    const data = await postCreateNewUser(
-      email,
-      password,
+    const data = await putUpdateUser(
+      dataUpdate.id,
       username,
       role,
       avatarImage,
     );
-    console.log(">>> component res", data);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await props.fetchListUsers();
+      await props.fetchListUsersWithPaginate(props.currentPage);
     }
     if (data && data.EC !== 0) {
       toast.error(data.EM);
