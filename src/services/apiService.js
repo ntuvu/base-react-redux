@@ -5,7 +5,7 @@ const postCreateNewUser = async (
   password,
   username,
   role,
-  avatarImage,
+  avatarImage
 ) => {
   const data = new FormData();
   data.append("email", email);
@@ -40,7 +40,11 @@ const getUsersWithPaginate = async (page, limit) => {
 };
 
 const postLogin = async (email, password) => {
-  return await axios.post("login", { email: email, password: password });
+  return await axios.post("login", {
+    email: email,
+    password: password,
+    delay: 2000,
+  });
 };
 
 const postRegister = async (email, username, password) => {

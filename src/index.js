@@ -6,6 +6,7 @@ import store from "./redux/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
+import "nprogress/nprogress.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,7 @@ root.render(
     </BrowserRouter>
 
     {/*</React.StrictMode>*/}
-  </Provider>,
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
