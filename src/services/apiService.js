@@ -55,6 +55,14 @@ const postRegister = async (email, username, password) => {
   });
 };
 
+const getQuizsByUser = async () => {
+  return axios.get("quiz-by-participant");
+};
+
+const getQuestionsByQuizId = async (id) => {
+  return axios.get(`questions-by-quiz?quizId=${id}`);
+};
+
 export {
   postCreateNewUser,
   getAllUsers,
@@ -63,4 +71,6 @@ export {
   getUsersWithPaginate,
   postLogin,
   postRegister,
+  getQuizsByUser,
+  getQuestionsByQuizId,
 };
