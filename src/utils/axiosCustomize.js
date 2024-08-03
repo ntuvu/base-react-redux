@@ -15,7 +15,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    console.log(">>> check store: ", store.getState());
     const access_token = store?.getState()?.user?.account?.access_token;
     config.headers["Authorization"] = "Bearer " + access_token;
     NProgress.start();
@@ -24,7 +23,7 @@ instance.interceptors.request.use(
   function (error) {
     // Do something with request error
     return Promise.reject(error);
-  }
+  },
 );
 
 // Add a response interceptor
@@ -41,7 +40,7 @@ instance.interceptors.response.use(
     return error && error.response && error.response.data
       ? error.response.data
       : Promise.reject(error);
-  }
+  },
 );
 
 export default instance;

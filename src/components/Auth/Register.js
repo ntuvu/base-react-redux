@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "./Auth.scss";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { postRegister } from "../../services/apiService";
+import validateEmail from "../../utils/validateEmail";
 
 const Register = (props) => {
   // state
@@ -13,14 +14,6 @@ const Register = (props) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const navigate = useNavigate();
-
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      );
-  };
 
   const handleRegister = async () => {
     // validate
